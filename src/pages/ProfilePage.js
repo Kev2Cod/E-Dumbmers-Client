@@ -62,23 +62,23 @@ const ProfilePage = () => {
           <Col lg={4} className="mt-5">
             <div className="mb-3">
               <span className="text-var-red fw-bold">Name</span>
-              <p>{user.name ? user.name : "-"}</p>
+              <p>{user?.name ? user.name : "-"}</p>
             </div>
             <div className="mb-3">
               <span className="text-var-red fw-bold">Email</span>
-              <p>{user.email ? user.email : "-"}</p>
+              <p>{user?.email ? user.email : "-"}</p>
             </div>
             <div className="mb-3">
               <span className="text-var-red fw-bold">Phone</span>
-              <p>{user.profile.phone ? user.profile.phone : "-"}</p>
+              <p>{user?.profile?.phone ? user.profile.phone : "-"}</p>
             </div>
             <div className="mb-3">
               <span className="text-var-red fw-bold">Gender</span>
-              <p>{user.profile.gender ? user.profile.gender : "-"}</p>
+              <p>{user?.profile?.gender ? user.profile.gender : "-"}</p>
             </div>
             <div className="mb-3">
               <span className="text-var-red fw-bold">Address</span>
-              <p>{user.profile.address ? user.profile.address : "-"} </p>
+              <p>{user?.profile?.address ? user.profile.address : "-"} </p>
             </div>
 
             <button onClick={() => handleEditProfile(state.user.id)} className="btn-red fw-normal px-4 mb-4">
