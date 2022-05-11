@@ -31,8 +31,6 @@ const ComplainAdmin = () => {
       },
     });
 
-    
-
     // define corresponding socket listener
     socket.on("new message", () => {
       console.log("contact", contact);
