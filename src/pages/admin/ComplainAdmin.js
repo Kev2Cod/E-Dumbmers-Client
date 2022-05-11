@@ -22,7 +22,7 @@ const ComplainAdmin = () => {
 
   // connect to server in useEffect function
   useEffect(() => {
-    socket = io( process.env.CHAT_URL || "http://localhost:5000", {
+    socket = io( process.env.CHAT_URL, {
       auth: {
         token: localStorage.getItem("token"), // we must set options to get access to socket server
       },
