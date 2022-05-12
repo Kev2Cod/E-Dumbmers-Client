@@ -206,7 +206,7 @@ const UpdateProductAdmin = () => {
             </>
           ) : (
             <>
-              <button type="submit" className="btn-green blink text-white fw-bold container my-3">
+              <button type="submit" className="btn-green blink text-white fw-bold container my-3" disable>
                 Process....
               </button>
             </>

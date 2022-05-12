@@ -11,13 +11,13 @@ import { API } from "../../config/api";
 
 export const Login = () => {
   const navigate = useNavigate();
-  const [loadingSubmit, setLoadingSubmit] = useState(false);
-
+  
   const title = "Login";
   document.title = "Dumbmers | " + title;
-
+  
   const [state, dispatch] = useContext(UserContext); // useContext
-
+  
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [message, setMessage] = useState(null);
 
   // Create variabel for store data with useState
@@ -73,18 +73,17 @@ export const Login = () => {
         navigate("/");
       }
     } catch (error) {
-      setLoadingSubmit(false);
       const alert = (
         <Alert variant="danger" className="py-1 text-center">
           <span className="blink">Failed</span>
         </Alert>
       );
+
+      setLoadingSubmit(false);
       setMessage(alert);
       console.log(error);
     }
   });
-
-  console.log("ini Loading", loadingSubmit);
 
   return (
     <>

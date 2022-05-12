@@ -86,6 +86,7 @@ const Register = () => {
           <span className="blink">Failed</span>
         </Alert>
       );
+      setLoadingSubmit(false);
       setMessage(alert);
       console.log(error);
     }
@@ -107,7 +108,7 @@ const Register = () => {
             <input type="password" placeholder="Password" name="password" onChange={handleChange} value={password} required />
           </div>
           <div className="d-grid">
-            {!loadingSubmit ? (
+            {loadingSubmit ? (
               <>
                 <button className="btn-red" type="submit">
                   Register
@@ -115,7 +116,7 @@ const Register = () => {
               </>
             ) : (
               <>
-                <button className="btn-red">Wait...</button>
+                <button className="btn-red" disabled>Wait...</button>
               </>
             )}
           </div>
