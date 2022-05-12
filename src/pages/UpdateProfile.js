@@ -68,7 +68,7 @@ const UpdateProfile = () => {
       const formData = new FormData();
       if (preview) {
         formData.set("image", preview[0], preview[0]?.name);
-      }
+      } 
       formData.set("name", form.name);
       formData.set("phone", form.phone);
       formData.set("gender", form.gender);
