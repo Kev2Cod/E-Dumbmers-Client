@@ -83,8 +83,10 @@ const UpdateProductAdmin = () => {
 
     // Create image url for preview
     if (e.target.type === "file") {
-      setPreview(e.target.files);
+      let url = URL.createObjectURL(e.target.files[0]);
+      setPreview(url);
     }
+
   };
 
   const handleSubmit = useMutation(async (e) => {
@@ -100,10 +102,14 @@ const UpdateProductAdmin = () => {
         },
       };
 
+      
+    console.log("FORM: ", form)
+    console.log("PREVIEW: ", preview)
+
       // Store data with FormData as object
       const formData = new FormData();
       if (preview) {
-        formData.set("image", preview[0], preview[0]?.name);
+        formData.set("image", form.image[0], form.image[0]?.name);
       }
       formData.set("name", form.name);
       formData.set("desc", form.desc);
@@ -154,7 +160,7 @@ const UpdateProductAdmin = () => {
           ) : (
             <div>
               <img
-                src={URL.createObjectURL(preview[0])}
+                src={preview}
                 style={{
                   maxWidth: "150px",
                   maxHeight: "150px",
@@ -206,7 +212,7 @@ const UpdateProductAdmin = () => {
             </>
           ) : (
             <>
-              <button type="submit" className="btn-green blink text-white fw-bold container my-3" disable>
+              <button className="btn-green blink text-white fw-bold container my-3" disable>
                 Process....
               </button>
             </>

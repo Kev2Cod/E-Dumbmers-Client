@@ -14,6 +14,7 @@ const UpdateProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [preview, setPreview] = useState(null); // For image preview
   const [form, setForm] = useState({
     name: "",
@@ -50,6 +51,8 @@ const UpdateProfile = () => {
   };
 
   const handleSubmit = useMutation(async (e) => {
+    setLoadingSubmit(true);
+
     try {
       e.preventDefault();
 
@@ -64,7 +67,7 @@ const UpdateProfile = () => {
       // Store data with FormData as Object
       const formData = new FormData();
       if (preview) {
-        formData.set("image", preview[0], preview[0]?.name);
+        formData.set("image", form.image[0], form.image[0]?.name);
       }
       formData.set("name", form.name);
       formData.set("phone", form.phone);
@@ -74,8 +77,10 @@ const UpdateProfile = () => {
       // Insert Profile data
       const response = await API.patch("/profile", formData, config);
       console.log(response)
+      setLoadingSubmit(false);
       navigate("/profile");
     } catch (error) {
+      setLoadingSubmit(false);
       console.log(error);
     }
   });
@@ -138,9 +143,19 @@ const UpdateProfile = () => {
             <textarea className="form-control bg-var-dark text-white border-form" placeholder="Address" name="address" value={form?.address} onChange={handleChange} rows="5"></textarea>
           </div>
 
-          <button type="submit" className="btn bg-var-green text-white fw-bold container mt-3">
-            Save
-          </button>
+          {!loadingSubmit ? (
+            <>
+              <button type="submit" className="btn-green text-white fw-bold container my-3">
+                Save
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="btn-green blink text-white fw-bold container my-3" disable>
+                Process....
+              </button>
+            </>
+          )}
         </form>
       </div>
     </>
