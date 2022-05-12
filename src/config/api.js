@@ -2,7 +2,7 @@ import axios from "axios";
 
 // buat base URL
 export const API = axios.create({
-  baseURL:  "http://localhost:5000/api/v1/",
+  baseURL: process.env.SERVER_URL || "https://e-dumbmerch.herokuapp.com/api/v1" ||  "http://localhost:5000/api/v1/",
 });
 // process.env.SERVER_URL || "https://e-dumbmerch.herokuapp.com/api/v1" ||
 
