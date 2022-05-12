@@ -108,7 +108,7 @@ const Register = () => {
             <input type="password" placeholder="Password" name="password" onChange={handleChange} value={password} required />
           </div>
           <div className="d-grid">
-            {loadingSubmit ? (
+            {!loadingSubmit ? (
               <>
                 <button className="btn-red" type="submit">
                   Register
