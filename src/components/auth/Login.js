@@ -104,7 +104,7 @@ export const Login = () => {
               </>
             ) : (
               <>
-                <button className="btn-red">Wait...</button>
+                <button className="btn-red blink">Wait...</button>
               </>
             )}
           </div>

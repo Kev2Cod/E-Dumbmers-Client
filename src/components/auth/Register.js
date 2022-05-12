@@ -116,7 +116,7 @@ const Register = () => {
               </>
             ) : (
               <>
-                <button className="btn-red" disabled>Wait...</button>
+                <button className="btn-red blink" disabled>Wait...</button>
               </>
             )}
           </div>
