@@ -86,7 +86,7 @@ const AddProductAdmin = () => {
       // Store data with FormData as Object
       const formData = new FormData();
       if(preview) {
-        formData.set("image", form.image[0], form.image[0].name);
+        formData.set("image", preview[0], preview[0].name);
       }
       formData.set("name", form.name);
       formData.set("desc", form.desc);
