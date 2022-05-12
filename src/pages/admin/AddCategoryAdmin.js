@@ -7,6 +7,7 @@ import { API } from "../../config/api";
 const AddCategoryAdmin = () => {
   // console.clear()
   const navigate = useNavigate();
+  const [loadingSubmit, setLoadingSubmit] = useState(false)
   const [category, setCategory] = useState("");
 
   const title = "Category Admin";
@@ -17,6 +18,7 @@ const AddCategoryAdmin = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoadingSubmit(true)
     try {
       e.preventDefault();
 
@@ -34,8 +36,10 @@ const AddCategoryAdmin = () => {
 
       // Kirim data categry ke database
       const response = await API.post("/category", body, config)
+      setLoadingSubmit(false)
       navigate('/category-admin')
     } catch (error) {
+      setLoadingSubmit(false)
       console.log(error)
     }
   }
@@ -49,7 +53,19 @@ const AddCategoryAdmin = () => {
           <div className="input-group mb-3">
             <input type="text" className="form-control bg-var-dark text-white border-form" onChange={handleChange} value={category} name="category" placeholder="Category" required/>
           </div>
-          <button className="btn bg-var-green text-white fw-bold container mt-5">Save</button>
+          {!loadingSubmit ? (
+            <>
+              <button type="submit" className="btn-green text-white fw-bold container my-3">
+                Save
+              </button>
+            </>
+          ) : (
+            <>
+              <button type="submit" className="btn-green blink text-white fw-bold container my-3">
+                Process....
+              </button>
+            </>
+          )}
         </form>
       </div>
       

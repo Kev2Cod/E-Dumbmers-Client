@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import "../assets/static/css/loading.css";
+
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { useQuery } from "react-query";
@@ -13,15 +15,12 @@ const DetailProduct = () => {
   const params = useParams();
   const { id } = params;
 
-  const [product, setProduct] = useState([]);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await API.get(`/product/${id}`);
-      setProduct(response.data.data);
-    };
-    fetchData();
-  }, []);
+  const { data: product, isLoading: loadingProduct } = useQuery("productCache", async () => {
+    const response = await API.get(`/product/${id}`);
+    return response.data.data;
+  });
 
   // Format Currency
   const formatter = new Intl.NumberFormat("id-ID", {
@@ -50,6 +49,7 @@ const DetailProduct = () => {
   }, []);
 
   const handleBuy = async () => {
+    setLoadingSubmit(true);
     try {
       // Get data from product
       const data = {
@@ -96,7 +96,9 @@ const DetailProduct = () => {
           alert("you closed the popup without finishing the payment");
         },
       });
+      setLoadingSubmit(false);
     } catch (error) {
+      setLoadingSubmit(false);
       console.log(error);
     }
   };
@@ -106,23 +108,49 @@ const DetailProduct = () => {
       <Navbar />
       <Container>
         <Row className="mt-5 mb-5">
-          <Col lg={6} className="d-flex justify-content-center">
-            <img src={product.image} alt="" className="image-detail-product p-5" />
-          </Col>
+          {!loadingProduct ? (
+            <>
+              <Col lg={6} className="d-flex justify-content-center">
+                <img src={product?.image} alt="" className="image-detail-product p-5" />
+              </Col>
 
-          <Col lg={6} className="product-detail mt-lg-0 mt-5 px-lg-0 px-4 ">
-            <h3 className="text-var-red">{product.name}</h3>
-            <p>Stock : {product.qty}</p>
-            <div className="description">
-              <p className="text-justify mb-5">{product.desc}</p>
-              <p className="text-var-red fw-bold fs-5 text-end mt-2">{formatter.format(product.price)}</p>
-            </div>
-            <div className="d-grid">
-              <button onClick={handleBuy} className="btn-red">
-                Buy
-              </button>
-            </div>
-          </Col>
+              <Col lg={6} className="product-detail mt-lg-0 mt-5 px-lg-0 px-4 ">
+                <h3 className="text-var-red">{product?.name}</h3>
+                <p>Stock : {product?.qty}</p>
+                <div className="description">
+                  <p className="text-justify mb-5">{product?.desc}</p>
+                  <p className="text-var-red fw-bold fs-5 text-end mt-2">{formatter.format(product?.price)}</p>
+                </div>
+                <div className="d-grid">
+                  <button onClick={handleBuy} className="btn-red">
+                    {!loadingSubmit ? "Buy" : "Process..."}
+                  </button>
+                </div>
+              </Col>
+            </>
+          ) : (
+            <>
+              <Col lg={12} className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>
+                <div style={{ width: "100%" }}>
+                  <div class="sk-circle">
+                    <div class="sk-circle1 sk-child"></div>
+                    <div class="sk-circle2 sk-child"></div>
+                    <div class="sk-circle3 sk-child"></div>
+                    <div class="sk-circle4 sk-child"></div>
+                    <div class="sk-circle5 sk-child"></div>
+                    <div class="sk-circle6 sk-child"></div>
+                    <div class="sk-circle7 sk-child"></div>
+                    <div class="sk-circle8 sk-child"></div>
+                    <div class="sk-circle9 sk-child"></div>
+                    <div class="sk-circle10 sk-child"></div>
+                    <div class="sk-circle11 sk-child"></div>
+                    <div class="sk-circle12 sk-child"></div>
+                  </div>{" "}
+                  <p className="text-center mt-3 fw-bold">Loading....🔎</p>
+                </div>
+              </Col>
+            </>
+          )}
         </Row>
       </Container>
     </>

@@ -8,6 +8,7 @@ const UpdateCategoryAdmin = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [category, setCategory] = useState({ name: "" });
 
   const title = "Category admin";
@@ -34,6 +35,7 @@ const UpdateCategoryAdmin = () => {
     });
   };
   const handleSubmit = useMutation(async (e) => {
+    setLoadingSubmit(true);
     try {
       e.preventDefault();
 
@@ -49,10 +51,11 @@ const UpdateCategoryAdmin = () => {
       const body = JSON.stringify(category);
 
       // Kirim data categry ke database
-      await API.patch('/category/' + id, body, config);
+      await API.patch("/category/" + id, body, config);
+      setLoadingSubmit(false);
       navigate("/category-admin");
-
     } catch (error) {
+      setLoadingSubmit(false);
       console.log(error);
     }
   });
@@ -64,9 +67,19 @@ const UpdateCategoryAdmin = () => {
         <div className="input-group mb-3">
           <input type="text" value={category.name} onChange={handleChange} className="form-control bg-var-dark text-white border-form" />
         </div>
-        <button type="submit" className="btn bg-var-green text-white fw-bold container mt-5">
-          Save
-        </button>
+        {!loadingSubmit ? (
+          <>
+            <button type="submit" className="btn-green text-white fw-bold container my-3">
+              Save
+            </button>
+          </>
+        ) : (
+          <>
+            <button type="submit" className="btn-green blink text-white fw-bold container my-3">
+              Process....
+            </button>
+          </>
+        )}
       </form>
     </div>
   );

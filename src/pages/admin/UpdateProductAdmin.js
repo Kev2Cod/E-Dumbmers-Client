@@ -13,6 +13,7 @@ const UpdateProductAdmin = () => {
   const title = "Product Admin";
   document.title = "Dumbmers | " + title;
 
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [categories, setCategories] = useState([]); //Store all category data
   const [categoryId, setCategoryId] = useState([]); //Save the selected category id
   const [preview, setPreview] = useState(null); //For image preview
@@ -87,6 +88,7 @@ const UpdateProductAdmin = () => {
   };
 
   const handleSubmit = useMutation(async (e) => {
+    setLoadingSubmit(true);
     try {
       e.preventDefault();
 
@@ -113,9 +115,11 @@ const UpdateProductAdmin = () => {
 
       const response = await API.patch(`/product/${product.id}`, formData, config);
       console.log(response.data);
+      setLoadingSubmit(false);
 
       navigate("/product-admin");
     } catch (error) {
+      setLoadingSubmit(false);
       console.log(error);
     }
   });
@@ -194,9 +198,19 @@ const UpdateProductAdmin = () => {
             ))}
           </div>
 
-          <button type="submit" className="btn bg-var-green text-white fw-bold container mt-3">
-            Save
-          </button>
+          {!loadingSubmit ? (
+            <>
+              <button type="submit" className="btn-green text-white fw-bold container my-3">
+                Save
+              </button>
+            </>
+          ) : (
+            <>
+              <button type="submit" className="btn-green blink text-white fw-bold container my-3">
+                Process....
+              </button>
+            </>
+          )}
         </form>
       </div>
     </>

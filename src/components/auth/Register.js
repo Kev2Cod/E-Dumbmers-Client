@@ -15,6 +15,7 @@ const Register = () => {
   document.title = "Dumbmers | " + title;
 
   // Create variabel for store data with useState
+  const [loadingSubmit, setLoadingSubmit] = useState(false); // for loading button
   const [message, setMessage] = useState(null);
   const [form, setForm] = useState({
     name: "",
@@ -33,6 +34,8 @@ const Register = () => {
   };
 
   const handleSubmit = useMutation(async (e) => {
+    // Set loading true
+    setLoadingSubmit(true);
     try {
       e.preventDefault();
 
@@ -48,6 +51,9 @@ const Register = () => {
 
       // Insert data user to database
       const response = await API.post("/register", body, config);
+
+      // Set loading false
+      setLoadingSubmit(false);
 
       setMessage("Register Success");
 
@@ -65,6 +71,8 @@ const Register = () => {
         });
         setMessage(alert);
       } else {
+        // Set loading false
+        setLoadingSubmit(false);
         const alert = (
           <Alert variant="danger" className="py-1">
             {response.data.message}
@@ -99,7 +107,17 @@ const Register = () => {
             <input type="password" placeholder="Password" name="password" onChange={handleChange} value={password} required />
           </div>
           <div className="d-grid">
-            <button className="btn-red" type="submit">Register</button>
+            {!loadingSubmit ? (
+              <>
+                <button className="btn-red" type="submit">
+                  Register
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="btn-red">Wait...</button>
+              </>
+            )}
           </div>
         </form>
       </div>

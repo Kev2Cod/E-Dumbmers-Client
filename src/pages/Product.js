@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import "../assets/static/css/loading.css"
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import { useQuery, useMutation, isLoading } from "react-query";
@@ -23,13 +24,18 @@ const Product = () => {
   const [value] = useDebounce(searchFilter, 1000);
 
   // fetching products
-  let { data: products } = useQuery("productCahce", async () => {
+  let {
+    data: products,
+    isLoading: loadingProduct,
+    isError,
+    error,
+  } = useQuery("productCahce", async () => {
     const response = await API.get("/products");
     return response.data.data;
   });
 
   // fetching categories
-  let { data: categories } = useQuery("categoriesCache", async () => {
+  let { data: categories, isLoading: loadingCategories } = useQuery("categoriesCache", async () => {
     const response = await API.get("/categories");
     return response.data.categories;
   });
@@ -78,27 +84,40 @@ const Product = () => {
           </div>
         </div>
 
-        {products?.length !== 0 ? (
-          <div className=" products mt-5 d-flex flex-wrap gap-3 mt-4 justify-content-md-around justify-content-center">
-            {filterByWord?.map((item, index) => (
-              <div key={index}>
-                <Card as={Link} to={`/detail-product/${item.id}`} className="card-product" style={{ textDecoration: "none", color: "white" }}>
-                  <Card.Img variant="top" src={item.image} className="image-product" style={{ minHeight: "5rem" }} />
-                  <Card.Body>
-                    <Card.Title className="text-var-red text-decoration-none">{`${item.name.slice(0, 16)}`}</Card.Title>
-                    <span>{`${convertRupiah.format(item.price)}`}</span>
-                    <br />
-                    <span>Stock : {item.qty}</span>
-                  </Card.Body>
-                </Card>
+        {!loadingProduct ? (
+          <>
+            {products?.length !== 0 ? (
+              <div className=" products mt-5 d-flex flex-wrap gap-3 mt-4 justify-content-md-around justify-content-center">
+                {filterByWord?.map((item, index) => (
+                  <div key={index}>
+                    <Card as={Link} to={`/detail-product/${item.id}`} className="card-product" style={{ textDecoration: "none", color: "white" }}>
+                      <Card.Img  variant="top" src={item.image} className="image-product" style={{ minHeight: "50px" }} />
+                      <Card.Body>
+                        <Card.Title className="text-var-red text-decoration-none">{`${item.name.slice(0, 16)}`}</Card.Title>
+                        <span>{`${convertRupiah.format(item.price)}`}</span>
+                        <br />
+                        <span>Stock : {item.qty}</span>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            ) : (
+              <div className="text-center">
+                <img src={imgEmpty} style={{ width: "40%" }} alt="empty" />
+                <div className="mt-4">No Data Product</div>
+              </div>
+            )}
+          </>
         ) : (
-          <div className="text-center">
-            <img src={imgEmpty} style={{ width: "40%" }} alt="empty" />
-            <div className="mt-4">No Data Product</div>
-          </div>
+          <>
+            <div class="spinner mt-5">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+            </div>
+            <p className="text-center">Get Product...</p>
+          </>
         )}
       </div>
     </>

@@ -13,6 +13,7 @@ const AddProductAdmin = () => {
   const title = "Product Admin";
   document.title = "Dumbmers | " + title;
 
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [categoryId, setCategoryId] = useState([]); //Save the selected category id
   const [preview, setPreview] = useState(null); // For image preview
   const [form, setForm] = useState({
@@ -22,8 +23,6 @@ const AddProductAdmin = () => {
     price: "",
     qty: "",
   }); // store product data
-
-
 
   // Fetching category data
   const { data: categories } = useQuery("categoryCache", async () => {
@@ -68,6 +67,7 @@ const AddProductAdmin = () => {
   };
 
   const handleSubmit = useMutation(async (e) => {
+    setLoadingSubmit(true);
     try {
       e.preventDefault();
       console.log(form);
@@ -95,9 +95,11 @@ const AddProductAdmin = () => {
       const response = await API.post("/product", formData, config);
       console.log(response);
 
+      setLoadingSubmit(false);
       navigate("/product-admin");
     } catch (error) {
       console.log(error);
+      setLoadingSubmit(false);
     }
   });
 
@@ -154,9 +156,19 @@ const AddProductAdmin = () => {
             ))}
           </div>
 
-          <button type="submit" className="btn bg-var-green text-white fw-bold container mt-3">
-            Save
-          </button>
+          {!loadingSubmit ? (
+            <>
+              <button type="submit" className="btn-green text-white fw-bold container my-3">
+                Save
+              </button>
+            </>
+          ) : (
+            <>
+              <button type="submit" className="btn-green blink text-white fw-bold container my-3">
+                Process....
+              </button>
+            </>
+          )}
         </form>
       </div>
     </>

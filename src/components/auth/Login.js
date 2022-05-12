@@ -11,6 +11,7 @@ import { API } from "../../config/api";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
 
   const title = "Login";
   document.title = "Dumbmers | " + title;
@@ -36,6 +37,7 @@ export const Login = () => {
   };
 
   const handleSubmit = useMutation(async (e) => {
+    setLoadingSubmit(true);
     try {
       e.preventDefault();
 
@@ -53,6 +55,9 @@ export const Login = () => {
       const response = await API.post("/login", body, config);
       console.log(response);
 
+      // set loading false
+      setLoadingSubmit(false);
+
       // Checking Process
       if (response?.status === 200) {
         // Send data to useContext
@@ -68,6 +73,7 @@ export const Login = () => {
         navigate("/");
       }
     } catch (error) {
+      setLoadingSubmit(false);
       const alert = (
         <Alert variant="danger" className="py-1 text-center">
           <span className="blink">Failed</span>
@@ -77,6 +83,8 @@ export const Login = () => {
       console.log(error);
     }
   });
+
+  console.log("ini Loading", loadingSubmit);
 
   return (
     <>
@@ -91,7 +99,15 @@ export const Login = () => {
             <input type="password" placeholder="Password" name="password" onChange={handleChange} value={password} required />
           </div>
           <div className="d-grid">
-            <button className="btn-red">Login</button>
+            {!loadingSubmit ? (
+              <>
+                <button className="btn-red">Login</button>
+              </>
+            ) : (
+              <>
+                <button className="btn-red">Wait...</button>
+              </>
+            )}
           </div>
         </form>
       </div>
