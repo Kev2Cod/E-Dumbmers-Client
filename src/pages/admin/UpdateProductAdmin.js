@@ -123,7 +123,7 @@ const UpdateProductAdmin = () => {
       console.log(response.data);
       setLoadingSubmit(false);
 
-      navigate("/product-admin");
+      navigate("/products-admin");
     } catch (error) {
       setLoadingSubmit(false);
       console.log(error);

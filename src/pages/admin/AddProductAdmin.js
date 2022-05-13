@@ -98,7 +98,7 @@ const AddProductAdmin = () => {
       console.log(response);
 
       setLoadingSubmit(false);
-      navigate("/product-admin");
+      navigate("/products-admin");
     } catch (error) {
       console.log(error);
       setLoadingSubmit(false);
