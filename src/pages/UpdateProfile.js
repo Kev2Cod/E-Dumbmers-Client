@@ -56,6 +56,8 @@ const UpdateProfile = () => {
     try {
       e.preventDefault();
 
+      console.log("ini form: ",form)
+
       // Configuration
       const config = {
         headers: {
@@ -67,7 +69,7 @@ const UpdateProfile = () => {
       // Store data with FormData as Object
       const formData = new FormData();
       if (preview) {
-        formData.set("image", preview[0], preview[0]?.name);
+        formData.set("image", form.image[0], form.image[0]?.name);
       } 
       formData.set("name", form.name);
       formData.set("phone", form.phone);
@@ -126,32 +128,32 @@ const UpdateProfile = () => {
             </label>
           </div>
           <div className="form mb-3">
-            <input type="text" placeholder="Nama" name="name" value={form?.name} onChange={handleChange} className="form-control bg-var-dark text-white border-form" />
+            <input type="text" placeholder="Nama" name="name" value={form?.name} onChange={handleChange} className="form-control bg-var-dark text-white border-form" required/>
           </div>
           <div className="form mb-3">
-            <input type="number" placeholder="Phone" name="phone" value={form?.phone} onChange={handleChange} className="form-control bg-var-dark text-white border-form" />
+            <input type="number" placeholder="Phone" name="phone" value={form?.phone} onChange={handleChange} className="form-control bg-var-dark text-white border-form" required/>
           </div>
 
           <div className="form mb-3">
-            <select value={form?.gender} name="gender" onChange={handleChange} className="form-select bg-var-dark text-white border-form">
-              <option selected>Gender</option>
+            <select value={form?.gender} name="gender" onChange={handleChange} className="form-select bg-var-dark text-white border-form" required>
+              <option value="" selected>Gender</option>
               <option value="Male">Male</option>
               <option value="Famale">Famale</option>
             </select>
           </div>
-          <div className="form mb-3">
-            <textarea className="form-control bg-var-dark text-white border-form" placeholder="Address" name="address" value={form?.address} onChange={handleChange} rows="5"></textarea>
+          <div className="form ">
+            <textarea className="form-control bg-var-dark text-white border-form" placeholder="Address" name="address" value={form?.address} onChange={handleChange} rows="5" required></textarea>
           </div>
 
           {!loadingSubmit ? (
             <>
-              <button type="submit" className="btn-green text-white fw-bold container my-3">
+              <button type="submit" className="btn-green text-white fw-bold container my-4">
                 Save
               </button>
             </>
           ) : (
             <>
-              <button className="btn-green blink text-white fw-bold container my-3" disable>
+              <button className="btn-green blink text-white fw-bold container my-4" disable>
                 Process....
               </button>
             </>

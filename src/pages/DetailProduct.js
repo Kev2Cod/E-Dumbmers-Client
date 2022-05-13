@@ -122,9 +122,15 @@ const DetailProduct = () => {
                   <p className="text-var-red fw-bold fs-5 text-end mt-2">{formatter.format(product?.price)}</p>
                 </div>
                 <div className="d-grid">
-                  <button onClick={handleBuy} className="btn-red">
-                    {!loadingSubmit ? "Buy" : "Process..."}
-                  </button>
+                  {!loadingSubmit ? (
+                    <button onClick={handleBuy} className="btn-red">
+                      Buy
+                    </button>
+                  ) : (
+                    <button onClick={handleBuy} className="btn-red blink" disabled>
+                      Process...
+                    </button>
+                  )}
                 </div>
               </Col>
             </>

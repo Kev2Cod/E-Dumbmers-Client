@@ -133,17 +133,17 @@ const AddProductAdmin = () => {
             </label>
           </div>
           <div className="input-group mb-3">
-            <input type="text" placeholder="Nama Product" name="name" onChange={handleChange} className="form-control bg-var-dark text-white border-form" />
+            <input type="text" placeholder="Nama Product" name="name" onChange={handleChange} className="form-control bg-var-dark text-white border-form" required/>
           </div>
           <div className="input-group mb-3">
-            <textarea className="form-control bg-var-dark text-white border-form" placeholder="Description" name="desc" onChange={handleChange} rows="5"></textarea>
+            <textarea className="form-control bg-var-dark text-white border-form" placeholder="Description" name="desc" onChange={handleChange} rows="5" required></textarea>
           </div>
 
           <div className="input-group mb-3">
-            <input type="number" placeholder="Price" name="price" onChange={handleChange} className="form-control bg-var-dark text-white border-form" />
+            <input type="number" placeholder="Price" name="price" onChange={handleChange} className="form-control bg-var-dark text-white border-form" required/>
           </div>
           <div className="input-group mb-3">
-            <input type="number" placeholder="Stock" name="qty" onChange={handleChange} className="form-control bg-var-dark text-white border-form" />
+            <input type="number" placeholder="Stock" name="qty" onChange={handleChange} className="form-control bg-var-dark text-white border-form" required/>
           </div>
 
           <div className="card-form-input mt-4 px-2 py-1 pb-2">

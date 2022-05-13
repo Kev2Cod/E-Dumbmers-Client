@@ -143,7 +143,7 @@ const UpdateProductAdmin = () => {
       <NavbarAdmin />
       <div className="container">
         <form onSubmit={(e) => handleSubmit.mutate(e)} className="mt-3">
-          <h5 className="text-start mb-4">Add Product</h5>
+          <h5 className="text-start mb-4">Edit Product</h5>
           {!preview ? (
             <div>
               <img
@@ -179,17 +179,17 @@ const UpdateProductAdmin = () => {
             </label>
           </div>
           <div className="input-group mb-3">
-            <input type="text" placeholder="Nama Product" name="name" value={form?.name} onChange={handleChange} className="form-control bg-var-dark text-white border-form" />
+            <input type="text" placeholder="Nama Product" name="name" value={form?.name} onChange={handleChange} className="form-control bg-var-dark text-white border-form" required/>
           </div>
           <div className="input-group mb-3">
-            <textarea className="form-control bg-var-dark text-white border-form" placeholder="Description" name="desc" value={form?.desc} onChange={handleChange} rows="5"></textarea>
+            <textarea className="form-control bg-var-dark text-white border-form" placeholder="Description" name="desc" value={form?.desc} onChange={handleChange} rows="5" required></textarea>
           </div>
 
           <div className="input-group mb-3">
-            <input type="number" placeholder="Price" name="price" value={form?.price} onChange={handleChange} className="form-control bg-var-dark text-white border-form" />
+            <input type="number" placeholder="Price" name="price" value={form?.price} onChange={handleChange} className="form-control bg-var-dark text-white border-form" required/>
           </div>
           <div className="input-group mb-3">
-            <input type="number" placeholder="Stock" name="qty" value={form?.qty} onChange={handleChange} className="form-control bg-var-dark text-white border-form" />
+            <input type="number" placeholder="Stock" name="qty" value={form?.qty} onChange={handleChange} className="form-control bg-var-dark text-white border-form" required/>
           </div>
 
           <div className="card-form-input mt-4 px-2 py-1 pb-2">

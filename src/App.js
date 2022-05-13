@@ -78,7 +78,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/update-profile/:id" element={<UpdateProfile/>} />
         <Route path="/category-admin/*" element={<CategoryAdmin />}/>
-        <Route path="/product-admin" element={<ProductAdmin />} />
+        <Route path="/products-admin" element={<ProductAdmin />} />
         <Route path="/add-product" element={<AddProductAdmin />} />
         <Route path="/add-category" element={<AddCategoryAdmin />} />
         <Route path="/complain" element={<Complain />} />
