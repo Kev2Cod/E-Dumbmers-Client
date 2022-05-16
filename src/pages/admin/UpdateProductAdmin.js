@@ -78,7 +78,8 @@ const UpdateProductAdmin = () => {
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.type === "file" ? e.target.files : e.target.value,
+      [e.target.name]:
+      e.target.type === "file" ? e.target.files : e.target.value,
     });
 
     // Create image url for preview
@@ -105,7 +106,7 @@ const UpdateProductAdmin = () => {
       // Store data with FormData as object
       const formData = new FormData();
       if (form.image) {
-        formData.set("image", form.image[0], form.image[0].name);
+        formData.set("image", form?.image[0], form?.image[0]?.name);
       }
       formData.set("name", form.name);
       formData.set("desc", form.desc);
