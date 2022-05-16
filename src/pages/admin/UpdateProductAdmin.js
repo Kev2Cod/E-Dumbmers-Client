@@ -106,7 +106,7 @@ const UpdateProductAdmin = () => {
       // Store data with FormData as object
       const formData = new FormData();
       if (form.image) {
-        formData.set("image", form?.image[0], form?.image[0]?.name);
+        formData.set("image", form?.image[0], form?.image[0]);
       }
       formData.set("name", form.name);
       formData.set("desc", form.desc);
