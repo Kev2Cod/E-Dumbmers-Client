@@ -66,6 +66,7 @@ const AddProductAdmin = () => {
     }
   };
 
+
   const handleSubmit = useMutation(async (e) => {
     setLoadingSubmit(true);
     try {

@@ -78,8 +78,7 @@ const UpdateProductAdmin = () => {
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]:
-      e.target.type === "file" ? e.target.files : e.target.value,
+      [e.target.name]: e.target.type === "file" ? e.target.files : e.target.value,
     });
 
     // Create image url for preview
@@ -87,8 +86,9 @@ const UpdateProductAdmin = () => {
       let url = URL.createObjectURL(e.target.files[0]);
       setPreview(url);
     }
-
   };
+
+  console.log(form)
 
   const handleSubmit = useMutation(async (e) => {
     setLoadingSubmit(true);
