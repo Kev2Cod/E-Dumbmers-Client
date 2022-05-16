@@ -102,13 +102,9 @@ const UpdateProductAdmin = () => {
         },
       };
 
-      
-    console.log("FORM: ", form)
-    console.log("PREVIEW: ", preview)
-
       // Store data with FormData as object
       const formData = new FormData();
-      if (preview) {
+      if (form.image) {
         formData.set("image", form.image[0], form.image[0]?.name);
       }
       formData.set("name", form.name);
