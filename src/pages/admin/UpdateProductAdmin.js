@@ -27,35 +27,41 @@ const UpdateProductAdmin = () => {
   }); //Store product data
 
   // Fetching detail product data by id from database
-  let { refetchProduct } = useQuery("productCache", async () => {
-    const config = {
-      headers: {
-        Authorization: "Basic " + localStorage.token,
-      },
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const config = {
+        headers: {
+          Authorization: "Basic " + localStorage.token,
+        },
+      };
+      const response = await API.get("/product/" + id, config);
+      setForm({
+        image: response.data.data.image,
+        name: response.data.data.name,
+        desc: response.data.data.desc,
+        price: response.data.data.price,
+        qty: response.data.data.qty,
+      });
+      setProduct(response.data.data);
     };
-    const response = await API.get("/product/" + id, config);
-    setForm({
-      image: response.data.data.image,
-      name: response.data.data.name,
-      desc: response.data.data.desc,
-      price: response.data.data.price,
-      qty: response.data.data.qty,
-    });
-    setProduct(response.data.data);
-  });
+    fetchProduct();
+  }, []);
 
   // Fetching category data
-  let { refetchCategories } = useQuery("categoriesCache", async () => {
-    const config = {
-      headers: {
-        Authorization: "Basic " + localStorage.token,
-      },
-    };
+  useEffect(() => {
+    let fetchCategory = async () => {
+      const config = {
+        headers: {
+          Authorization: "Basic " + localStorage.token,
+        },
+      };
 
-    const response = await API.get("/categories", config);
-    console.log(response);
-    setCategories(response.data.categories);
-  });
+      const response = await API.get("/categories", config);
+      console.log(response);
+      setCategories(response.data.categories);
+    };
+    fetchCategory()
+  }, []);
 
   // For handle if category selected
   const handleChangeCategoryId = (e) => {
