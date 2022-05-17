@@ -24,17 +24,27 @@ const UpdateProfile = () => {
     image: "",
   });
 
-  let { refecthUser } = useQuery("userCache", async () => {
-    const response = await API.get(`/user/${id}`);
-    console.log(response);
-    setForm({
-      name: response.data.user.name,
-      phone: response.data.user.profile.phone,
-      gender: response.data.user.profile.gender,
-      address: response.data.user.profile.address,
-      image: response.data.user.profile.image,
-    });
-  });
+    // Fetching detail product data by id from database
+    useEffect(() => {
+      const fetchProfile = async () => {
+        const config = {
+          headers: {
+            Authorization: "Basic " + localStorage.token,
+          },
+        };
+
+        const response = await API.get(`/user/${id}`);
+        console.log(response);
+        setForm({
+          name: response.data.user.name,
+          phone: response.data.user.profile.phone,
+          gender: response.data.user.profile.gender,
+          address: response.data.user.profile.address,
+          image: response.data.user.profile.image,
+        });
+      };
+      fetchProfile();
+    }, []);
 
   // Handle change data on form
   const handleChange = (e) => {
@@ -68,7 +78,7 @@ const UpdateProfile = () => {
 
       // Store data with FormData as Object
       const formData = new FormData();
-      if (preview) {
+      if (form?.image) {
         formData.set("image", form.image[0], form.image[0]?.name);
       } 
       formData.set("name", form.name);
