@@ -68,7 +68,7 @@ export const Login = () => {
       }
 
       if (response.data.data.status === "admin") {
-        navigate("/complain");
+        navigate("/complain-admin");
       } else {
         navigate("/");
       }

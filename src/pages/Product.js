@@ -1,10 +1,14 @@
 import { React, useState, useEffect } from "react";
-import "../assets/static/css/loading.css"
+import "../assets/static/css/loading.css";
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import { useQuery, useMutation, isLoading } from "react-query";
 import { convertRupiah } from "../utils/Utils";
 import { useDebounce } from "use-debounce";
+
+// Skeleton
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import Navbar from "../components/Navbar";
 
@@ -21,7 +25,7 @@ const Product = () => {
   const [searchFilter, setSearchFilter] = useState("");
   // const [products, setProducts] = useState([]);
   // const [showProduct, setShowProducts] = useState();
-  const [value] = useDebounce(searchFilter, 1000);
+  const [value] = useDebounce(searchFilter, 500);
 
   // fetching products
   let {
@@ -35,10 +39,13 @@ const Product = () => {
   });
 
   // fetching categories
-  let { data: categories, isLoading: loadingCategories } = useQuery("categoriesCache", async () => {
-    const response = await API.get("/categories");
-    return response.data.categories;
-  });
+  let { data: categories, isLoading: loadingCategories } = useQuery(
+    "categoriesCache",
+    async () => {
+      const response = await API.get("/categories");
+      return response.data.categories;
+    }
+  );
 
   const filterByWord = products?.filter((item) => {
     //if no input the return the original
@@ -71,7 +78,13 @@ const Product = () => {
           <span className="text-var-red fw-bold fs-4 me-3">Products</span>
 
           <div className="form ms-auto me-3">
-            <input type="text" name="search" onChange={handleChangeSearch} placeholder="Search" style={{ width: "40vw" }} />
+            <input
+              type="text"
+              name="search"
+              onChange={handleChangeSearch}
+              placeholder="Search"
+              style={{ width: "40vw" }}
+            />
           </div>
 
           <div className="form" style={{ width: "20vw" }}>
@@ -84,16 +97,29 @@ const Product = () => {
           </div>
         </div>
 
-        {!loadingProduct ? (
+        {loadingProduct ? (
           <>
             {products?.length !== 0 ? (
               <div className=" products mt-5 d-flex flex-wrap gap-3 mt-4 justify-content-md-around justify-content-center">
                 {filterByWord?.map((item, index) => (
                   <div key={index}>
-                    <Card as={Link} to={`/detail-product/${item.id}`} className="card-product" style={{ textDecoration: "none", color: "white" }}>
-                      <Card.Img  variant="top" src={item.image} className="image-product" style={{ minHeight: "50px" }} />
+                    <Card
+                      as={Link}
+                      to={`/detail-product/${item.id}`}
+                      className="card-product"
+                      style={{ textDecoration: "none", color: "white" }}
+                    >
+                      <Card.Img
+                        variant="top"
+                        src={item.image}
+                        className="image-product"
+                        style={{ minHeight: "50px" }}
+                      />
                       <Card.Body>
-                        <Card.Title className="text-var-red text-decoration-none">{`${item.name.slice(0, 16)}`}</Card.Title>
+                        <Card.Title className="text-var-red text-decoration-none">{`${item.name.slice(
+                          0,
+                          16
+                        )}`}</Card.Title>
                         <span>{`${convertRupiah.format(item.price)}`}</span>
                         <br />
                         <span>Stock : {item.qty}</span>
@@ -111,6 +137,11 @@ const Product = () => {
           </>
         ) : (
           <>
+            <SkeletonTheme baseColor="#444" highlightColor="#202020">
+              <p>
+                <Skeleton count={3} />
+              </p>
+            </SkeletonTheme>
             <div class="spinner mt-5">
               <div class="bounce1"></div>
               <div class="bounce2"></div>

@@ -13,6 +13,10 @@ import Navbar from "../components/Navbar";
 import { UserContext } from "../context/userContext";
 import { API } from "../config/api";
 
+// Skeleton
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 const ProfilePage = () => {
   const title = "Profile";
   document.title = "Dumbmers | " + title;
@@ -23,7 +27,7 @@ const ProfilePage = () => {
   console.log("State : ", state);
 
   let {
-    isLoading : loadingTransactions,
+    isLoading: loadingTransactions,
     isError,
     data: transactions,
     refetch,
@@ -36,14 +40,19 @@ const ProfilePage = () => {
     };
     const response = await API.get(`/transactions`, config);
     const data = response.data.data;
-    const filterTransaction = await data.filter((item) => item.buyer.id === state.user.id);
+    const filterTransaction = await data.filter(
+      (item) => item.buyer.id === state.user.id
+    );
     return filterTransaction;
   });
 
-  let { data: user, isLoading: loadingUser } = useQuery("userCache", async () => {
-    const response = await API.get(`/user/${state.user.id}`);
-    return response.data.user;
-  });
+  let { data: user, isLoading: loadingUser } = useQuery(
+    "userCache",
+    async () => {
+      const response = await API.get(`/user/${state.user.id}`);
+      return response.data.user;
+    }
+  );
   console.log("Data user : ", user);
 
   const handleEditProfile = (id) => {
@@ -55,11 +64,16 @@ const ProfilePage = () => {
       <Navbar title={title} />
       <Container className="mt-3">
         <Row className="text-lg-start text-center ">
-          {!loadingUser ? (
+          {loadingUser ? (
             <>
               <Col lg={4}>
                 <h5 className="text-var-red mb-4">My Profile</h5>
-                <img className="p-3" src={user?.profile?.image ? user.profile.image : imgBlank} alt="Profile" style={{ maxWidth: "100%" }} />
+                <img
+                  className="p-3"
+                  src={user?.profile?.image ? user.profile.image : imgBlank}
+                  alt="Profile"
+                  style={{ maxWidth: "100%" }}
+                />
               </Col>
               <Col lg={4} className="mt-5">
                 <div className="mb-3">
@@ -83,54 +97,59 @@ const ProfilePage = () => {
                   <p>{user?.profile?.address ? user.profile.address : "-"} </p>
                 </div>
 
-                <button onClick={() => handleEditProfile(state.user.id)} className="btn-red fw-normal px-4 mb-4">
+                <button
+                  onClick={() => handleEditProfile(state.user.id)}
+                  className="btn-red fw-normal px-4 mb-4"
+                >
                   Edit Profile
                 </button>
               </Col>
             </>
           ) : (
+            // Still Loading
             <>
-              <Col lg={4}>
-                <h5 className="text-var-red mb-4">My Profile</h5>
-                <div className="p-3 d-flex align-items-center" style={{ width: "100%", height: "100%" }}>
-                  <div class="sk-circle">
-                    <div class="sk-circle1 sk-child"></div>
-                    <div class="sk-circle2 sk-child"></div>
-                    <div class="sk-circle3 sk-child"></div>
-                    <div class="sk-circle4 sk-child"></div>
-                    <div class="sk-circle5 sk-child"></div>
-                    <div class="sk-circle6 sk-child"></div>
-                    <div class="sk-circle7 sk-child"></div>
-                    <div class="sk-circle8 sk-child"></div>
-                    <div class="sk-circle9 sk-child"></div>
-                    <div class="sk-circle10 sk-child"></div>
-                    <div class="sk-circle11 sk-child"></div>
-                    <div class="sk-circle12 sk-child"></div>
-                  </div>{" "}
-                </div>
-              </Col>
-              <Col lg={4} className="mt-5">
-                <div className="mb-3">
-                  <span className="text-var-red fw-bold">Name</span>
-                  <p>Loading...</p>
-                </div>
-                <div className="mb-3">
-                  <span className="text-var-red fw-bold">Email</span>
-                  <p>Loading...</p>
-                </div>
-                <div className="mb-3">
-                  <span className="text-var-red fw-bold">Phone</span>
-                  <p>Loading...</p>
-                </div>
-                <div className="mb-3">
-                  <span className="text-var-red fw-bold">Gender</span>
-                  <p>Loading...</p>
-                </div>
-                <div className="mb-3">
-                  <span className="text-var-red fw-bold">Address</span>
-                  <p>Loading...</p>
-                </div>
-              </Col>
+              <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                <Col lg={4}>
+                  <h5 className="text-var-red mb-4">My Profile</h5>
+                  <Skeleton width={400} height={400} />
+                </Col>
+                <Col lg={4} className="mt-5">
+                  <div className="mb-3">
+                    <span className="text-var-red fw-bold">Name</span>
+                    <p>
+                      <Skeleton />
+                    </p>
+                  </div>
+                  <div className="mb-3">
+                    <span className="text-var-red fw-bold">Email</span>
+                    <p>
+                      <Skeleton />
+                    </p>
+                  </div>
+                  <div className="mb-3">
+                    <span className="text-var-red fw-bold">Phone</span>
+                    <p>
+                      <Skeleton />
+                    </p>
+                  </div>
+                  <div className="mb-3">
+                    <span className="text-var-red fw-bold">Gender</span>
+                    <p>
+                      <Skeleton />
+                    </p>
+                  </div>
+                  <div className="mb-3">
+                    <span className="text-var-red fw-bold">Address</span>
+                    <p>
+                      <Skeleton />
+                    </p>
+                  </div>
+
+                  <button className="btn-red fw-normal px-4 mb-4" disabled>
+                    Edit Profile
+                  </button>
+                </Col>
+              </SkeletonTheme>
             </>
           )}
 
@@ -143,22 +162,47 @@ const ProfilePage = () => {
                     {transactions?.length > 0 ? (
                       <>
                         {transactions?.map((item, index) => (
-                          <Row key={item.id} className="tabel-transaction text p-2 border-bottom rounded">
-                            <Col xs={3} className="d-flex align-items-center justify-content-center">
+                          <Row
+                            key={item.id}
+                            className="tabel-transaction text p-2 border-bottom rounded"
+                          >
+                            <Col
+                              xs={3}
+                              className="d-flex align-items-center justify-content-center"
+                            >
                               <div>
-                                <img src={item.product.image} className="image-transactions" alt="" />
+                                <img
+                                  src={item.product.image}
+                                  className="image-transactions"
+                                  alt=""
+                                />
                               </div>
                             </Col>
 
                             <Col xs={6}>
                               <div>
-                                <span className="fw-bold text-var-red">{item.product.name}</span>
-                                <small className="text-var-red d-block mb-3">{dateFormat(item.createdAt, "dddd, mmmm dS, yyyy, HH:MM ")} WIB</small>
-                                <span className="d-inline-block">Price: {convertRupiah.format(item.product.price)}</span>
+                                <span className="fw-bold text-var-red">
+                                  {item.product.name}
+                                </span>
+                                <small className="text-var-red d-block mb-3">
+                                  {dateFormat(
+                                    item.createdAt,
+                                    "dddd, mmmm dS, yyyy, HH:MM "
+                                  )}{" "}
+                                  WIB
+                                </small>
+                                <span className="d-inline-block">
+                                  Price:{" "}
+                                  {convertRupiah.format(item.product.price)}
+                                </span>
                               </div>
                             </Col>
                             <Col xs={3} className="py-3 px-1">
-                              <div className={`status-transaction-${item.status} h-100 rounded d-flex justify-content-center align-items-center fw-bold`}>{item.status}</div>
+                              <div
+                                className={`status-transaction-${item.status} h-100 rounded d-flex justify-content-center align-items-center fw-bold`}
+                              >
+                                {item.status}
+                              </div>
                             </Col>
                           </Row>
                         ))}
