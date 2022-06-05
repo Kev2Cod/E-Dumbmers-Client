@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import "../assets/static/css/loading.css"
+import "../assets/static/css/loading.css";
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import { useQuery, useMutation, isLoading } from "react-query";
@@ -71,16 +71,7 @@ const Product = () => {
           <span className="text-var-red fw-bold fs-4 me-3">Products</span>
 
           <div className="form ms-auto me-3">
-            <input type="text" name="search" onChange={handleChangeSearch} placeholder="Search" style={{ width: "40vw" }} />
-          </div>
-
-          <div className="form" style={{ width: "20vw" }}>
-            <select onChange={changeCategory}>
-              <option value="All">All</option>
-              {categories?.map((item) => (
-                <option value={item.name}>{item.name}</option>
-              ))}
-            </select>
+            <input type="text" name="search" onChange={handleChangeSearch} placeholder="Search Product" style={{ width: "50vw" }} />
           </div>
         </div>
 
@@ -91,7 +82,7 @@ const Product = () => {
                 {filterByWord?.map((item, index) => (
                   <div key={index}>
                     <Card as={Link} to={`/detail-product/${item.id}`} className="card-product" style={{ textDecoration: "none", color: "white" }}>
-                      <Card.Img  variant="top" src={item.image} className="image-product" style={{ minHeight: "50px" }} />
+                      <Card.Img variant="top" src={item.image} className="image-product" style={{ minHeight: "50px" }} />
                       <Card.Body>
                         <Card.Title className="text-var-red text-decoration-none">{`${item.name.slice(0, 16)}`}</Card.Title>
                         <span>{`${convertRupiah.format(item.price)}`}</span>

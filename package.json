@@ -42,5 +42,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/Kev2Cod/E-Dumbmers-Client.git",
+  "author": "'Kevin <'kevinity310@gmail.com'>",
+  "license": "MIT"
 }
