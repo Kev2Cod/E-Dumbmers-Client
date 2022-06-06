@@ -1,9 +1,5 @@
 import { React, useState, useEffect } from "react";
 import "../assets/static/css/loading.css";
-<<<<<<< HEAD
-import { Link } from "react-router-dom";
-=======
->>>>>>> fitur-loading
 import { Card } from "react-bootstrap";
 import { useQuery, useMutation, isLoading } from "react-query";
 import { useDebounce } from "use-debounce";
@@ -81,7 +77,6 @@ const Product = () => {
             <input type="text" name="search" onChange={handleChangeSearch} placeholder="Search Product" style={{ width: "50vw" }} />
           </div>
         </div>
-
 
         {/* Card */}
         <div className="products mt-5 d-flex flex-wrap gap-3 mt-4 justify-content-md-start justify-content-center ">
