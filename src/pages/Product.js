@@ -114,6 +114,38 @@ const Product = () => {
                     </p>
                   </Card.Body>
                 </Card>
+                <Card className="card-product" style={{ textDecoration: "none", color: "white" }}>
+                  <div style={{ minHeight: "120px" }}>
+                    <Skeleton height={`100%`} />
+                  </div>
+                  <Card.Body>
+                    <Card.Title className="text-var-red text-decoration-none">
+                      <Skeleton width={`100%`} />
+                    </Card.Title>
+                    <span>
+                      <Skeleton width={`90%`} />
+                    </span>
+                    <p style={{ marginTop: "5px" }}>
+                      <Skeleton width={`30%`} />
+                    </p>
+                  </Card.Body>
+                </Card>
+                <Card className="card-product" style={{ textDecoration: "none", color: "white" }}>
+                  <div style={{ minHeight: "120px" }}>
+                    <Skeleton height={`100%`} />
+                  </div>
+                  <Card.Body>
+                    <Card.Title className="text-var-red text-decoration-none">
+                      <Skeleton width={`100%`} />
+                    </Card.Title>
+                    <span>
+                      <Skeleton width={`90%`} />
+                    </span>
+                    <p style={{ marginTop: "5px" }}>
+                      <Skeleton width={`30%`} />
+                    </p>
+                  </Card.Body>
+                </Card>
               </SkeletonTheme>
             </>
           )}

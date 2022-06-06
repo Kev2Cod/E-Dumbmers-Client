@@ -230,7 +230,7 @@ body {
 
 /* Card Product */
 .card-product{
-  max-width: 15.4%;
+  width: 15.4%;
   height: 15rem;
   background-color: var(--dark);
   /* text-decoration: none; */
