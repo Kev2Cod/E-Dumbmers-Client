@@ -201,8 +201,9 @@ body {
 
 .image-product{
   height: 18rem;
+  width: 100% ;
   object-fit: cover; /* cover, contain, fill, scale-down */
-  object-position: center;
+  object-position: center center;
 }
 
 .image-detail-product{
@@ -229,7 +230,7 @@ body {
 
 /* Card Product */
 .card-product{
-  width: 12rem;
+  max-width: 15.4%;
   height: 15rem;
   background-color: var(--dark);
   /* text-decoration: none; */
