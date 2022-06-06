@@ -11,6 +11,7 @@
     "react-alert-template-mui": "^1.0.7",
     "react-bootstrap": "^2.2.3",
     "react-dom": "^18.0.0",
+    "react-loading-skeleton": "^3.1.0",
     "react-query": "^3.38.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",

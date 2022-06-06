@@ -1,10 +1,16 @@
 import { React, useState, useEffect } from "react";
 import "../assets/static/css/loading.css";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+>>>>>>> fitur-loading
 import { Card } from "react-bootstrap";
 import { useQuery, useMutation, isLoading } from "react-query";
-import { convertRupiah } from "../utils/Utils";
 import { useDebounce } from "use-debounce";
+
+// Skeleton
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import Navbar from "../components/Navbar";
 
@@ -12,6 +18,7 @@ import imgEmpty from "../assets/static/media/empty.svg";
 
 // import { useQuery } from "react-query";
 import { API, setAuthToken } from "../config/api";
+import CardProduct from "../components/card/CardProduct";
 
 const Product = () => {
   const title = "Products";
@@ -21,7 +28,7 @@ const Product = () => {
   const [searchFilter, setSearchFilter] = useState("");
   // const [products, setProducts] = useState([]);
   // const [showProduct, setShowProducts] = useState();
-  const [value] = useDebounce(searchFilter, 1000);
+  const [value] = useDebounce(searchFilter, 500);
 
   // fetching products
   let {
@@ -75,41 +82,79 @@ const Product = () => {
           </div>
         </div>
 
-        {!loadingProduct ? (
-          <>
-            {products?.length !== 0 ? (
-              <div className=" products mt-5 d-flex flex-wrap gap-3 mt-4 justify-content-md-around justify-content-center">
-                {filterByWord?.map((item, index) => (
-                  <div key={index}>
-                    <Card as={Link} to={`/detail-product/${item.id}`} className="card-product" style={{ textDecoration: "none", color: "white" }}>
-                      <Card.Img variant="top" src={item.image} className="image-product" style={{ minHeight: "50px" }} />
-                      <Card.Body>
-                        <Card.Title className="text-var-red text-decoration-none">{`${item.name.slice(0, 16)}`}</Card.Title>
-                        <span>{`${convertRupiah.format(item.price)}`}</span>
-                        <br />
-                        <span>Stock : {item.qty}</span>
-                      </Card.Body>
-                    </Card>
+
+        {/* Card */}
+        <div className="products mt-5 d-flex flex-wrap gap-3 mt-4 justify-content-md-start justify-content-center ">
+          {!loadingProduct ? (
+            <>
+              {products?.length !== 0 ? (
+                <>
+                  {filterByWord?.map((item) => (
+                    <CardProduct id={item.id} image={item.image} nameProduct={item.name} price={item.price} qty={item.qty} />
+                  ))}
+                </>
+              ) : (
+                <div className="text-center">
+                  <img src={imgEmpty} style={{ width: "40%" }} alt="empty" />
+                  <div className="mt-4">No Data Product</div>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                <Card className="card-product" style={{ textDecoration: "none", color: "white" }}>
+                  <div style={{ minHeight: "120px" }}>
+                    <Skeleton height={`100%`} />
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center">
-                <img src={imgEmpty} style={{ width: "40%" }} alt="empty" />
-                <div className="mt-4">No Data Product</div>
-              </div>
-            )}
-          </>
-        ) : (
-          <>
-            <div class="spinner mt-5">
-              <div class="bounce1"></div>
-              <div class="bounce2"></div>
-              <div class="bounce3"></div>
-            </div>
-            <p className="text-center">Get Product...</p>
-          </>
-        )}
+                  <Card.Body>
+                    <Card.Title className="text-var-red text-decoration-none">
+                      <Skeleton width={`100%`} />
+                    </Card.Title>
+                    <span>
+                      <Skeleton width={`90%`} />
+                    </span>
+                    <p style={{ marginTop: "5px" }}>
+                      <Skeleton width={`30%`} />
+                    </p>
+                  </Card.Body>
+                </Card>
+                <Card className="card-product" style={{ textDecoration: "none", color: "white" }}>
+                  <div style={{ minHeight: "120px" }}>
+                    <Skeleton height={`100%`} />
+                  </div>
+                  <Card.Body>
+                    <Card.Title className="text-var-red text-decoration-none">
+                      <Skeleton width={`100%`} />
+                    </Card.Title>
+                    <span>
+                      <Skeleton width={`90%`} />
+                    </span>
+                    <p style={{ marginTop: "5px" }}>
+                      <Skeleton width={`30%`} />
+                    </p>
+                  </Card.Body>
+                </Card>
+                <Card className="card-product" style={{ textDecoration: "none", color: "white" }}>
+                  <div style={{ minHeight: "120px" }}>
+                    <Skeleton height={`100%`} />
+                  </div>
+                  <Card.Body>
+                    <Card.Title className="text-var-red text-decoration-none">
+                      <Skeleton width={`100%`} />
+                    </Card.Title>
+                    <span>
+                      <Skeleton width={`90%`} />
+                    </span>
+                    <p style={{ marginTop: "5px" }}>
+                      <Skeleton width={`30%`} />
+                    </p>
+                  </Card.Body>
+                </Card>
+              </SkeletonTheme>
+            </>
+          )}
+        </div>
       </div>
     </>
   );

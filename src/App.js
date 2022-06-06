@@ -54,9 +54,11 @@ function App() {
 
       // Send data to useContext
       dispatch({
-        type: "USER_SUCCESS",
+        type: "LOGIN_SUCCESS",
         payload,
       });
+
+      console.log(state)
     } catch (error) {
       console.log(error);
     }
